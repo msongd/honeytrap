@@ -1,0 +1,36 @@
+[listener]
+type="socket"
+
+[service.ssh-simulator]
+type="ssh-simulator"
+credentials=["root:root", "root:password"]
+
+[[port]]
+ports=["tcp/2222"]
+services=["ssh-simulator"]
+
+[service.nginx]
+type="http"
+server="nginx"
+
+[[port]]
+port="tcp/8080"
+services=["nginx"]
+
+
+[channel.console]
+type="console"
+
+[channel.log]
+type="file"
+maxsize=1073741824
+filename="/data/honey.log"
+
+[[filter]]
+channel=["log","console"]
+categories=["http","ssh"]
+
+[[logging]]
+output = "stdout"
+level = "debug"
+
